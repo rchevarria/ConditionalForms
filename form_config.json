@@ -1,0 +1,34 @@
+{
+    "fields": [
+      {
+        "name": "username",
+        "label": "Username",
+        "type": "StringField",
+        "required": true
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "type": "EmailField",
+        "required": true
+      },
+      {
+        "name": "subscribe",
+        "label": "Subscribe to Newsletter",
+        "type": "RadioField",
+        "choices": ["Yes", "No"],
+        "required": false
+      },
+      {
+        "name": "preferences",
+        "label": "Preferences",
+        "type": "SelectField",
+        "choices": ["Option 1", "Option 2", "Option 3"],
+        "conditional": {
+          "field": "subscribe",
+          "value": "Yes"
+        }
+      }
+    ]
+  }
+  

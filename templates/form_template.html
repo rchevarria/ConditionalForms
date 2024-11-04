@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Form</title>
+    <script>
+        function toggleFields() {
+            const subscribeField = document.querySelector('input[name="subscribe"]:checked');
+            const preferencesField = document.getElementById("preferences_div");
+
+            if (subscribeField && subscribeField.value === "Yes") {
+                preferencesField.style.display = "block";
+            } else {
+                preferencesField.style.display = "none";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            toggleFields();  // Initial check
+            const subscribeOptions = document.querySelectorAll('input[name="subscribe"]');
+            subscribeOptions.forEach(option => option.addEventListener("change", toggleFields));
+        });
+    </script>
+</head>
+<body>
+    <h1>Dynamic Form</h1>
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        {% for field in form %}
+            <div>
+                {{ field.label }}<br>
+                {% if field.name == 'preferences' %}
+                    <div id="preferences_div" style="display: none;">
+                        {{ field() }}
+                        {% if field.errors %}
+                            <span style="color: red;">{{ field.errors[0] }}</span>
+                        {% endif %}
+                    </div>
+                {% else %}
+                    {{ field() }}
+                    {% if field.errors %}
+                        <span style="color: red;">{{ field.errors[0] }}</span>
+                    {% endif %}
+                {% endif %}
+            </div>
+        {% endfor %}
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
